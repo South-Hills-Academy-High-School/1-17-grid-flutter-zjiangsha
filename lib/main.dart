@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
 
-void main(){
+void main() {
   runApp(MyApp());
 }
 
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
@@ -22,24 +22,43 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppState extends ChangeNotifier {}
+class MyAppState extends ChangeNotifier {
+  var opacityList = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+}
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
     return Scaffold(
       body: GridView.builder(
+        itemCount: 9,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8),
-            child: Container(
-              height: 50,
-              width: 50,
-              color: Color.fromARGB(255, 176, 106, 162),
-              child: Image(image: Image.network(''))),
+          return Opacity(
+            opacity: 0.0,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: SizedBox(
+                height: 50,
+                width: 50,
+                child: Material(
+                  color: Color.fromARGB(255, 176, 106, 162),
+                  child: InkWell(
+                    child: Image.network(
+                        'https://i.giphy.com/media/xT0xezQGU5xCDJuCPe/200.gif'),
+                    onTap: () {},
+                  ),
+                ),
+              ),
+            ),
           );
         },
       ),
